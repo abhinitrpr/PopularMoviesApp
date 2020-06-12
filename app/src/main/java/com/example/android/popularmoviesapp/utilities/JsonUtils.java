@@ -1,6 +1,7 @@
 package com.example.android.popularmoviesapp.utilities;
 
-import com.udacity.sandwichclub.model.Sandwich;
+import com.example.android.popularmoviesapp.model.Movies;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,34 +11,32 @@ import java.util.List;
 
 public class JsonUtils {
 
-    public static Sandwich parseSandwichJson(String json) {
+    public static Movies parseMoviesJson(String json) {
 
         try {
-            List<String> parsedIngredients = new ArrayList<>();
-            List<String> parsedAlsoKnownAs = new ArrayList<>();
-            JSONObject sandwichDetails = new JSONObject(json);
-            String placeOfOrigin = sandwichDetails.getString("placeOfOrigin");
-            String description = sandwichDetails.getString("description");
-            String image = sandwichDetails.getString("image");
-            JSONArray ingredientsJson = sandwichDetails.getJSONArray("ingredients");
+            List<String> parsedMoviesName = new ArrayList<>();
+            List<Integer> parsedIds = new ArrayList<>();
+            List<String> parsedPosterPath = new ArrayList<>();
+            List<String> parsedReleasedDate = new ArrayList<>();
+            List<Double> parsedVoteAverage = new ArrayList<>();
+            List<String> parsedPlotSynopsis = new ArrayList<>();
+            JSONObject allResults = new JSONObject(json);
+            JSONArray movieResults = allResults.getJSONArray("results");
+            for (int i =0 ; i< movieResults.length();i++){
+                JSONObject parsedResult = movieResults.getJSONObject(i);
+                parsedMoviesName.add(parsedResult.getString("title"));
+                parsedIds.add(parsedResult.getInt("id"));
+                parsedPosterPath.add(parsedResult.getString("poster_path"));
+                parsedReleasedDate.add(parsedResult.getString("release_date"));
+                parsedVoteAverage.add(parsedResult.getDouble("vote_average"));
+                parsedPlotSynopsis.add(parsedResult.getString("overview"));
 
-
-            for(int i =0; i< ingredientsJson.length();i++){
-                parsedIngredients.add(ingredientsJson.getString(i));
-            }
-            JSONObject name = sandwichDetails.getJSONObject("name");
-            String mainName = name.getString("mainName");
-            JSONArray alsoKnownAs = name.getJSONArray("alsoKnownAs");
-
-
-
-            for(int i =0; i< alsoKnownAs.length();i++){
-                parsedAlsoKnownAs.add(alsoKnownAs.getString(i));
             }
 
-            Sandwich sandwich = new Sandwich(mainName,parsedAlsoKnownAs,placeOfOrigin, description, image, parsedIngredients);
 
-            return sandwich;
+            Movies moviesList = new Movies(parsedMoviesName,parsedIds,parsedPosterPath, parsedReleasedDate, parsedVoteAverage, parsedPlotSynopsis);
+
+            return moviesList;
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Movies {
 
-    private List<String> moviesName;
-    private List<Integer> ids;
-    private List<String> posterPath;
-    private List<String> releaseDate;
-    private List<Double> voteAverage;
+    private List<String> moviesName = null;
+    private List<Integer> ids = null;
+    private List<String> posterPath = null;
+    private List<String> releaseDate = null;
+    private List<Double> voteAverage = null;
     private List<String> plotSynopsis = null;
 
     /**
@@ -70,7 +70,7 @@ public class Movies {
         return plotSynopsis;
     }
 
-    public void setPlotSynopsis(List<String> ingredients) {
+    public void setPlotSynopsis(List<String> plotSynopsis) {
         this.plotSynopsis = plotSynopsis;
     }
 }
