@@ -16,7 +16,7 @@ public class JsonUtils {
         try {
             List<String> parsedMoviesName = new ArrayList<>();
             List<Integer> parsedIds = new ArrayList<>();
-            List<String> parsedPosterPath = new ArrayList<>();
+            ArrayList<String> parsedPosterPath = new ArrayList<>();
             List<String> parsedReleasedDate = new ArrayList<>();
             List<Double> parsedVoteAverage = new ArrayList<>();
             List<String> parsedPlotSynopsis = new ArrayList<>();
@@ -26,7 +26,7 @@ public class JsonUtils {
                 JSONObject parsedResult = movieResults.getJSONObject(i);
                 parsedMoviesName.add(parsedResult.getString("title"));
                 parsedIds.add(parsedResult.getInt("id"));
-                parsedPosterPath.add(parsedResult.getString("poster_path"));
+                parsedPosterPath.add("http://image.tmdb.org/t/p/w185"+ parsedResult.getString("poster_path"));
                 parsedReleasedDate.add(parsedResult.getString("release_date"));
                 parsedVoteAverage.add(parsedResult.getDouble("vote_average"));
                 parsedPlotSynopsis.add(parsedResult.getString("overview"));

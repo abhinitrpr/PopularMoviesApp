@@ -1,12 +1,13 @@
 package com.example.android.popularmoviesapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Movies {
 
     private List<String> moviesName = null;
     private List<Integer> ids = null;
-    private List<String> posterPath = null;
+    private ArrayList<String> posterPath = null;
     private List<String> releaseDate = null;
     private List<Double> voteAverage = null;
     private List<String> plotSynopsis = null;
@@ -17,7 +18,7 @@ public class Movies {
     public Movies() {
     }
 
-    public Movies(List<String> moviesName, List<Integer> ids, List<String> posterPath, List<String> releaseDate, List<Double> voteAverage, List<String> plotSynopsis) {
+    public Movies(List<String> moviesName, List<Integer> ids, ArrayList<String> posterPath, List<String> releaseDate, List<Double> voteAverage, List<String> plotSynopsis) {
         this.moviesName = moviesName;
         this.ids = ids;
         this.posterPath = posterPath;
@@ -42,11 +43,11 @@ public class Movies {
         this.ids = ids;
     }
 
-    public List<String> getPosterPath() {
+    public ArrayList<String> getPosterPath() {
         return posterPath;
     }
 
-    public void setPosterPath(List<String> posterPath) {
+    public void setPosterPath(ArrayList<String> posterPath) {
         this.posterPath = posterPath;
     }
 
