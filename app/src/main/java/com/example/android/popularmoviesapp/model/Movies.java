@@ -1,77 +1,179 @@
 package com.example.android.popularmoviesapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Movies {
+public class Movies implements Parcelable {
 
-    private List<String> moviesName = null;
-    private List<Integer> ids = null;
-    private ArrayList<String> posterPath = null;
-    private List<String> releaseDate = null;
-    private List<Double> voteAverage = null;
-    private List<String> plotSynopsis = null;
+    private String moviesName;
+    private Integer id;
+    private String posterPath;
+    private String releaseDate;
+    private Double voteAverage;
+    private String plotSynopsis;
 
     /**
-     * No args constructor for use in serialization
+     * Constructor for a movie object
      */
     public Movies() {
     }
 
-    public Movies(List<String> moviesName, List<Integer> ids, ArrayList<String> posterPath, List<String> releaseDate, List<Double> voteAverage, List<String> plotSynopsis) {
-        this.moviesName = moviesName;
-        this.ids = ids;
-        this.posterPath = posterPath;
-        this.releaseDate = releaseDate;
-        this.voteAverage = voteAverage;
-        this.plotSynopsis = plotSynopsis;
+    protected Movies(Parcel in) {
+        moviesName = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        posterPath = in.readString();
+        releaseDate = in.readString();
+        if (in.readByte() == 0) {
+            voteAverage = null;
+        } else {
+            voteAverage = in.readDouble();
+        }
+        plotSynopsis = in.readString();
     }
 
-    public List<String> getMoviesName() {
+
+
+    /**
+     * Gets the original title of the movie
+     *
+     * @return the name of the movie
+     */
+
+    public String getMoviesName() {
         return moviesName;
     }
 
-    public void setMoviesName(List<String> moviesName) {
-        this.moviesName = moviesName;
+    /**
+     * Gets the id of the movie
+     *
+     * @return the ID of the movie
+     */
+
+    public Integer getId() {
+        return id;
     }
 
-    public List<Integer> getIds() {
-        return ids;
-    }
-
-    public void setIds(List<Integer> ids) {
-        this.ids = ids;
-    }
-
-    public ArrayList<String> getPosterPath() {
+    /**
+     * Gets the path of the movie poster
+     *
+     * @return the posterPath of the movie
+     */
+    public String getPosterPath() {
         return posterPath;
     }
 
-    public void setPosterPath(ArrayList<String> posterPath) {
-        this.posterPath = posterPath;
-    }
-
-    public List<String> getReleaseDate() {
+    /**
+     * Gets the release date of the movie
+     *
+     * @return the releaseDate of the movie
+     */
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(List<String> releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public List<Double> getVoteAverage() {
+    /**
+     * Gets the average rating of the movie
+     *
+     * @return the voteAverage of the movie
+     */
+    public Double getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(List<Double> voteAverage) {
-        this.voteAverage = voteAverage;
-    }
-
-    public List<String> getPlotSynopsis() {
+    /**
+     * Gets the overview of the movie
+     *
+     * @return the plotSynopsis of the movie
+     */
+    public String getPlotSynopsis() {
         return plotSynopsis;
     }
 
-    public void setPlotSynopsis(List<String> plotSynopsis) {
+    /**
+     * Sets the name of the movie
+     *
+     * @param moviesName Original title of the movie
+     */
+
+    public void setMoviesName(String moviesName) {
+        this.moviesName = moviesName;
+    }
+
+    /**
+     * Sets the id of the movie
+     *
+     * @param id Original title of the movie
+     */
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * Sets the path of the movie poster
+     *
+     * @param posterPath Original title of the movie
+     */
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    /**
+     * Sets the release date of the movie
+     *
+     * @param releaseDate Original title of the movie
+     */
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    /**
+     * Sets the rating of the movie
+     *
+     * @param voteAverage Original title of the movie
+     */
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    /**
+     * Sets the overview of the movie
+     *
+     * @param plotSynopsis Original title of the movie
+     */
+    public void setPlotSynopsis(String plotSynopsis) {
         this.plotSynopsis = plotSynopsis;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(moviesName);
+        dest.writeInt(id);
+        dest.writeDouble(voteAverage);
+        dest.writeString(plotSynopsis);
+        dest.writeString(posterPath);
+        dest.writeString(releaseDate);
+
+    }
+
+    public static final Creator<Movies> CREATOR = new Creator<Movies>() {
+        @Override
+        public Movies createFromParcel(Parcel in) {
+            return new Movies(in);
+        }
+
+        @Override
+        public Movies[] newArray(int size) {
+            return new Movies[size];
+        }
+    };
 }

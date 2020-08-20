@@ -4,6 +4,7 @@ import com.example.android.popularmoviesapp.model.Movies;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -11,31 +12,22 @@ import java.util.List;
 
 public class JsonUtils {
 
-    public static Movies parseMoviesJson(String json) {
+    public static Movies[] parseMoviesJson(String json) throws JSONException {
 
         try {
-            List<String> parsedMoviesName = new ArrayList<>();
-            List<Integer> parsedIds = new ArrayList<>();
-            ArrayList<String> parsedPosterPath = new ArrayList<>();
-            List<String> parsedReleasedDate = new ArrayList<>();
-            List<Double> parsedVoteAverage = new ArrayList<>();
-            List<String> parsedPlotSynopsis = new ArrayList<>();
             JSONObject allResults = new JSONObject(json);
             JSONArray movieResults = allResults.getJSONArray("results");
+            Movies[] moviesList = new Movies[movieResults.length()];
             for (int i =0 ; i< movieResults.length();i++){
+                moviesList[i] = new Movies();
                 JSONObject parsedResult = movieResults.getJSONObject(i);
-                parsedMoviesName.add(parsedResult.getString("title"));
-                parsedIds.add(parsedResult.getInt("id"));
-                parsedPosterPath.add("http://image.tmdb.org/t/p/w185"+ parsedResult.getString("poster_path"));
-                parsedReleasedDate.add(parsedResult.getString("release_date"));
-                parsedVoteAverage.add(parsedResult.getDouble("vote_average"));
-                parsedPlotSynopsis.add(parsedResult.getString("overview"));
-
+                moviesList[i].setMoviesName(parsedResult.getString("title"));
+                moviesList[i].setId(parsedResult.getInt("id"));
+                moviesList[i].setPosterPath("http://image.tmdb.org/t/p/w185"+ parsedResult.getString("poster_path"));
+                moviesList[i].setReleaseDate(parsedResult.getString("release_date"));
+                moviesList[i].setVoteAverage(parsedResult.getDouble("vote_average"));
+                moviesList[i].setPlotSynopsis(parsedResult.getString("overview"));
             }
-
-
-            Movies moviesList = new Movies(parsedMoviesName,parsedIds,parsedPosterPath, parsedReleasedDate, parsedVoteAverage, parsedPlotSynopsis);
-
             return moviesList;
 
         } catch (Exception e) {

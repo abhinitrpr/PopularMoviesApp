@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.android.popularmoviesapp.model.Movies;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class GridViewAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<String> posterPath;
+    private Movies[] mMovies;
 
     public GridViewAdapter(Context context) {
         this.context = context;
@@ -22,12 +23,12 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return posterPath.size();
+        return mMovies.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return posterPath.get(position);
+        return mMovies[position];
     }
 
     @Override
@@ -46,14 +47,14 @@ public class GridViewAdapter extends BaseAdapter {
         ImageView imageView = convertView.findViewById(R.id.grid_item_image);
 
         Picasso.get()
-                .load(posterPath.get(position))
+                .load(mMovies[position].getPosterPath())
                 .into(imageView);
 
         return convertView;
     }
 
-    public void setPosterPath(ArrayList<String> posterPath){
-        this.posterPath = posterPath;
+    public void setMoviesArray(Movies[] movies){
+        mMovies = movies;
         notifyDataSetChanged();
     }
 }
