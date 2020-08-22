@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,22 +32,32 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Movies moviesData = intent.getParcelableExtra("movieData");
-        String movie = "", release = "",plotSynopsisData ="", posterPath ="";
-        Double ratingData =0.0;
+//        String movie = "", release = "",plotSynopsisData ="", posterPath ="";
+//        Double ratingData =0.0;
+//        if(moviesData != null){
+//            movie = moviesData.getMoviesName();
+//             release = moviesData.getReleaseDate();
+//             ratingData = moviesData.getVoteAverage();
+//             plotSynopsisData = moviesData.getPlotSynopsis();
+//             posterPath = moviesData.getPosterPath();
+//        }
+////        Log.i("movie",movie);
+////        Log.i("releseDate",release);
+////        Log.i("rating",ratingData.toString());
+////        Log.i("plot",plotSynopsisData);
         if(moviesData != null){
-            movie = moviesData.getMoviesName();
-             release = moviesData.getReleaseDate();
-             ratingData = moviesData.getVoteAverage();
-             plotSynopsisData = moviesData.getPlotSynopsis();
-             posterPath = moviesData.getPosterPath();
+            System.out.println(moviesData);
+            movieName.setText(moviesData.getMoviesName());
+            releaseDate.setText(String.format("%s",moviesData.getReleaseDate()));
+            ratings.setText(String.format("%s",moviesData.getVoteAverage()));
+            plotSynopsis.setText(moviesData.getPlotSynopsis());
+            Picasso.get().load(moviesData.getPosterPath()).into(imageView);
+
         }
 
 
-        Picasso.get().load(posterPath).into(imageView);
-        movieName.setText(movie);
-        releaseDate.setText(release);
-        ratings.setText(ratingData.toString());
-        plotSynopsis.setText(plotSynopsisData);
+
+        //Log.i("message", release);
 
 
     }

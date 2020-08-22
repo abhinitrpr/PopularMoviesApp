@@ -20,21 +20,12 @@ public class Movies implements Parcelable {
 
     protected Movies(Parcel in) {
         moviesName = in.readString();
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
+        id = in.readInt();
         posterPath = in.readString();
         releaseDate = in.readString();
-        if (in.readByte() == 0) {
-            voteAverage = null;
-        } else {
-            voteAverage = in.readDouble();
-        }
+        voteAverage = in.readDouble();
         plotSynopsis = in.readString();
     }
-
 
 
     /**
@@ -158,10 +149,11 @@ public class Movies implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(moviesName);
         dest.writeInt(id);
-        dest.writeDouble(voteAverage);
-        dest.writeString(plotSynopsis);
         dest.writeString(posterPath);
         dest.writeString(releaseDate);
+        dest.writeDouble(voteAverage);
+        dest.writeString(plotSynopsis);
+
 
     }
 

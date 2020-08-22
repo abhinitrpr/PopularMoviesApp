@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
     private Movies[] mMovie = null;
+    private String queryMovie ="popular";
+    private String nameSort = "Popular Movies";
+    private static final String CALLBACK_QUERY = "callbackQuery";
+    private static final String CALLBACK_NAMESORT= "callbackNameSort";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,24 +53,39 @@ public class MainActivity extends AppCompatActivity {
 
         gridView = findViewById(R.id.gridView);
         gridViewAdapter = new GridViewAdapter(getApplicationContext());
-
-        loadGridData("popular");
+        if (savedInstanceState != null){
+            if (savedInstanceState.containsKey(CALLBACK_QUERY) || savedInstanceState.containsKey(CALLBACK_NAMESORT)){
+                queryMovie = savedInstanceState.getString(CALLBACK_QUERY);
+                nameSort = savedInstanceState.getString(CALLBACK_NAMESORT);
+                setTitle(nameSort);
+                loadGridData(queryMovie);
+                return;
+            }
+        }
+        loadGridData(queryMovie);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Movies movie = gridViewAdapter.getItem(position);
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                intent.putExtra("movieData", mMovie[position]);
-//                intent.putExtra("releaseDate", releaseDate.get(position));
-//                intent.putExtra("ratings", voteAverage.get(position));
-//                intent.putExtra("id", ids.get(position));
-//                intent.putExtra("plotSynopsis", plotSynopsis.get(position));
-//                intent.putExtra("movieName", moviesName.get(position));
+                intent.putExtra("movieData", movie);
+
 
                 startActivity(intent);
             }
         });
 
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String queryMovieSaved = queryMovie;
+        String nameSortSaved = nameSort;
+        outState.putString(CALLBACK_QUERY, queryMovieSaved);
+        outState.putString(CALLBACK_NAMESORT, nameSortSaved);
 
     }
 
@@ -105,12 +126,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.top_rated) {
-            loadGridData("top_rated");
-            setTitle("Top Rated Movies");
+            queryMovie = "top_rated";
+            nameSort = "Top Rated Movies";
+            loadGridData(queryMovie);
+            setTitle(nameSort);
             return true;
         } else if (id == R.id.popular) {
-            loadGridData("popular");
-            setTitle("Popular Movies");
+            queryMovie = "popular";
+            nameSort = "Popular Movies";
+            loadGridData(queryMovie);
+            setTitle(nameSort);
             return true;
         }
         return super.onOptionsItemSelected(item);

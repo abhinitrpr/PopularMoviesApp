@@ -27,7 +27,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Movies getItem(int position) {
         return mMovies[position];
     }
 
